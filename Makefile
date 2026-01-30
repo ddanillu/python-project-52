@@ -5,7 +5,7 @@ lint:
 	uv run ruff check
 
 build:
-    ./build.sh
+	./build.sh
 
 render-start:
-    gunicorn task_manager.wsgi
+	gunicorn task_manager.wsgi
