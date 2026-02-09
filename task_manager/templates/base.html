@@ -1,0 +1,71 @@
+{% load django_bootstrap5 i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% bootstrap_css %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Менеджер задач{% endblock %}</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'index' %}">Менеджер задач</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="dropdown ms-2">
+                <form class="d-inline" action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <select name="language" class="form-select form-select-sm" 
+                            onchange="this.form.submit()" style="width: auto;">
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% for lang in languages %}
+                            <option value="{{ lang.code }}" 
+                                    {% if LANGUAGE_CODE == lang.code %}selected{% endif %}>
+                                {{ lang.name_local }} ({{ lang.code|upper }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/">{% translate "Пользователи" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login/">{% translate "Вход" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register/">{% translate "Регистрация" %}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light text-muted py-4 mt-auto">
+        <div class="container text-center">
+            <a target="_blank" href="https://github.com/ddanillu" class="text-info text-decoration-none">ddanillu</a>
+            <p class="mb-0 small opacity-75">Powered by Django & Bootstrap 5</p>
+        </div>
+    </footer>
+
+    {% bootstrap_javascript %}
+</body>
+</html>
