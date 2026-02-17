@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'task_manager',
     'django_bootstrap5',
 ]
@@ -132,3 +133,10 @@ LOCALE_PATHS = [
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Authentication redirects (Login/Logout URLs)
+# https://docs.djangoproject.com/en/6.0/topics/auth/default/#the-two-default-views
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

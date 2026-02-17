@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 i18n %}
+{% block title %}
+{% if form.instance.pk %}
+    {% translate "Изменение пользователя" %}
+{% else %}
+    {% translate "Регистрация" %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <h1 class="h2 mb-4">
+            {% if form.instance.pk %}
+                {% translate "Изменение пользователя" %}
+            {% else %}
+                {% translate "Регистрация" %}
+            {% endif %}
+            </h1>
+
+            {% if not form.instance.pk %}
+            <p class="text-muted mb-4">
+                {% translate "Введите данные для создания аккаунта" %}
+            </p>
+            {% endif %}
+            
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% bootstrap_field form.first_name show_label=True %}
+                {% bootstrap_field form.last_name show_label=True %}
+                {% bootstrap_field form.username show_label=True %}
+                {% bootstrap_field form.password1 show_label=True %}
+                {% bootstrap_field form.password2 show_label=True %}
+                
+                <button type="submit" class="btn btn-primary w-100">
+                    {% if form.instance.pk %}
+                        {% translate "Сохранить" %}
+                    {% else %}
+                        {% translate "Зарегистрироваться" %}
+                    {% endif %}
+                </button>
+            </form>
+            
+            {% if not form.instance.pk %}
+            <div class="mt-4 text-center">
+                <a href="{% url 'login' %}" class="text-decoration-none">
+                    {% blocktrans %}Уже есть аккаунт? Войти{% endblocktrans %}
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

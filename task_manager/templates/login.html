@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 i18n %}
+{% block title %}{% translate "Вход" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="text-center mb-4">
+                <h1 class="h2 mb-3">{% translate "Вход" %}</h1>
+                <p class="text-muted">{% translate "Введите данные для входа" %}</p>
+            </div>
+            
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form show_label=True %}
+                <div class="mb-3">
+                    <a href="{% url 'register' %}" class="text-decoration-none">
+                        {% blocktrans %}Нет аккаунта? Регистрация{% endblocktrans %}
+                    </a>
+                </div>
+                {% translate "Войти" as login_button_text %}
+                {% bootstrap_button button_type="submit" content=login_button_text %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

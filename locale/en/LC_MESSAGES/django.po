@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 17:19+0300\n"
+"POT-Creation-Date: 2026-02-17 13:46+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,77 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: task_manager/templates/base.html:42
+
+#: task_manager/forms.py:10
+msgid "Имя"
+msgstr "Name"
+
+#: task_manager/forms.py:15
+msgid "Фамилия"
+msgstr "Last name"
+
+#: task_manager/forms.py:20 task_manager/templates/users_list.html:30
+msgid "Имя пользователя"
+msgstr "User name"
+
+#: task_manager/forms.py:24
+msgid "Email"
+msgstr "Email"
+
+#: task_manager/forms.py:31
+msgid "Пароль"
+msgstr "Password"
+
+#: task_manager/forms.py:32
+msgid "Подтверждение пароля"
+msgstr "Password confirmation"
+
+#: task_manager/forms.py:37
+msgid "Пароль минимум 8 символов"
+msgstr "Password minimum 8 characters"
+
+#: task_manager/templates/base.html:16
+msgid "Менеджер задач"
+msgstr "Task manager"
+
+#: task_manager/templates/base.html:43 task_manager/templates/users_list.html:4
+#: task_manager/templates/users_list.html:10
 msgid "Пользователи"
 msgstr "Users"
 
-#: task_manager/templates/base.html:45
+#: task_manager/templates/base.html:46 task_manager/templates/login.html:3
+#: task_manager/templates/login.html:10
 msgid "Вход"
 msgstr "Login"
 
-#: task_manager/templates/base.html:48
+#: task_manager/templates/base.html:49 task_manager/templates/form.html:7
+#: task_manager/templates/form.html:19
 msgid "Регистрация"
 msgstr "Register"
+
+#: task_manager/templates/form.html:5 task_manager/templates/form.html:17
+msgid "Изменение пользователя"
+msgstr "Update user"
+
+#: task_manager/templates/form.html:25
+msgid "Введите данные для создания аккаунта"
+msgstr "Enter your login details"
+
+#: task_manager/templates/form.html:39
+msgid "Сохранить"
+msgstr "Save"
+
+#: task_manager/templates/form.html:41
+msgid "Зарегистрироваться"
+msgstr "Register"
+
+#: task_manager/templates/form.html:49
+msgid "Уже есть аккаунт? Войти"
+msgstr "No account? Register"
+
+#: task_manager/templates/index.html:3
+msgid "Главная"
+msgstr "Main"
 
 #: task_manager/templates/index.html:9
 msgid "Добро пожаловать!"
@@ -36,3 +96,49 @@ msgstr "Welcome!"
 #: task_manager/templates/index.html:10
 msgid "Сервис управления задачами"
 msgstr "Task management service"
+
+#: task_manager/templates/login.html:11
+msgid "Введите данные для входа"
+msgstr "Enter your login details"
+
+#: task_manager/templates/login.html:19
+msgid "Нет аккаунта? Регистрация"
+msgstr "No account? Register"
+
+#: task_manager/templates/login.html:22
+msgid "Войти"
+msgstr "Login"
+
+#: task_manager/templates/user_delete.html:3
+#: task_manager/templates/user_delete.html:12
+msgid "Удаление пользователя"
+msgstr "Delete user"
+
+#: task_manager/templates/user_delete.html:15
+msgid "Вы действительно хотите удалить пользователя"
+msgstr "Are you sure you want to delete user"
+
+#: task_manager/templates/user_delete.html:21
+msgid "Отменить"
+msgstr "Cancel"
+
+#: task_manager/templates/user_delete.html:24
+#: task_manager/templates/users_list.html:52
+msgid "Удалить"
+msgstr "Delete"
+
+#: task_manager/templates/users_list.html:31
+msgid "Полное имя"
+msgstr "Full name"
+
+#: task_manager/templates/users_list.html:32
+msgid "Дата создания"
+msgstr "Created"
+
+#: task_manager/templates/users_list.html:49
+msgid "Изменить"
+msgstr "Update"
+
+#: task_manager/templates/users_list.html:59
+msgid "Пользователи не найдены"
+msgstr "No users found"

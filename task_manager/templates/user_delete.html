@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% translate "Удаление пользователя" %}{% endblock %}
+
+{% block content %}
+  <div class="container-fluid container-lg my-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-7">
+        
+        <div class="card shadow-sm">
+          <div class="card-body p-5">
+            <h1 class="h3 mb-4">{% translate "Удаление пользователя" %}</h1>
+  
+            <p class="fs-5 text-secondary mb-4">
+                {% translate "Вы действительно хотите удалить пользователя" %} {{ object.username }}?
+            </p>
+
+            <form method="post" class="d-flex gap-3">
+            {% csrf_token %}
+            <a href="{% url 'users' %}" class="btn btn-secondary">
+                {% translate "Отменить" %}
+            </a>
+            <button type="submit" class="btn btn-outline-danger">
+                {% translate "Удалить" %}
+            </button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

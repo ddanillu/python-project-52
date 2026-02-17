@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate "Пользователи" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1>{% translate "Пользователи" %}</h1>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>{% translate "Имя пользователя" %}</th>
+                            <th>{% translate "Полное имя" %}</th>
+                            <th>{% translate "Дата создания" %}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in object_list %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>
+                                <a href="{% url 'user_update' user.pk %}">
+                                    {{ user.username }}
+                                </a>
+                            </td>
+                            <td>{{ user.first_name }} {{ user.last_name }}</td>
+                            <td>{{ user.date_joined|date:"d.m.Y H:i" }}</td>
+                            <td>
+                                <a href="{% url 'user_update' user.pk %}" class="btn btn-outline-primary btn-sm">
+                                    {% translate "Изменить" %}
+                                </a>
+                                <a href="{% url 'user_delete' user.pk %}" class="btn btn-outline-danger btn-sm">
+                                    {% translate "Удалить" %}
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                {% translate "Пользователи не найдены" %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
