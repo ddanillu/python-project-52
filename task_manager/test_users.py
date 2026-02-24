@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.contrib import messages
 from django.contrib.auth.models import User
 
 class UserTests(TestCase):
@@ -20,7 +21,7 @@ class UserTests(TestCase):
 
     def test_users_list_unauthenticated(self):
         """список пользователей без входа"""
-        response = self.client.get(reverse('users'))
+        response = self.client.get(reverse('users_list'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'testuser')
 
@@ -38,7 +39,7 @@ class UserTests(TestCase):
         'password1': 'newpass123',
         'password2': 'newpass123'
     })
-        self.assertRedirects(response, '/login/')
+        self.assertRedirects(response, reverse('login'))
         self.assertTrue(User.objects.filter(username='newuser').exists())
 
     def test_user_update_own_allowed(self):
@@ -51,7 +52,10 @@ class UserTests(TestCase):
         """редактирование чужого"""
         self.client.login(username='testuser', password='testpass123')
         response = self.client.get(reverse('user_update', args=[self.user2.pk]))
-        self.assertEqual(response.status_code, 403)
+        
+        messages_list = list(messages.get_messages(response.wsgi_request))
+        self.assertEqual(len(messages_list), 1)
+        self.assertIn("У вас нет прав", str(messages_list[0]))
 
     def test_user_delete_own_allowed(self):
         """удаление своего пользователя"""
@@ -63,13 +67,15 @@ class UserTests(TestCase):
         """удаление своего + редирект"""
         self.client.login(username='testuser', password='testpass123')
         response = self.client.post(reverse('user_delete', args=[self.user1.pk]))
-        self.assertRedirects(response, reverse('users'))
+        self.assertRedirects(response, reverse('users_list'))
         self.assertFalse(User.objects.filter(pk=self.user1.pk).exists())
 
     def test_login_post_redirects_to_tasks(self):
         """После логина — редирект на главную"""
-        response = self.client.post(reverse('login'), {
-            'username': 'testuser', 
+        self.form_data = {
+            'username': 'testuser',
             'password': 'testpass123'
-        })
-        self.assertRedirects(response, '/')
+            }
+        response = self.client.post(reverse('login'), self.form_data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Добро')

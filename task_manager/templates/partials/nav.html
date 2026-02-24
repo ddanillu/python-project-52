@@ -1,0 +1,59 @@
+{% load django_bootstrap5 i18n %} 
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'index' %}">{% translate "Менеджер задач" %}</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="dropdown ms-2">
+            <form class="d-inline" action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <select name="language" class="form-select form-select-sm" 
+                        onchange="this.form.submit()" style="width: auto;">
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% for lang in languages %}
+                        <option value="{{ lang.code }}" 
+                                {% if LANGUAGE_CODE == lang.code %}selected{% endif %}>
+                            {{ lang.name_local }} ({{ lang.code|upper }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users_list' %}">{% translate "Пользователи" %}</a>
+                </li>
+                
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'statuses_list' %}">{% translate "Статусы" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{% translate "Метки" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{% translate "Задачи" %}</a> 
+                    </li>
+                    <li class="nav-item">
+                        {% include 'partials/logout_form.html' %}
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">{% translate "Вход" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">{% translate "Регистрация" %}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

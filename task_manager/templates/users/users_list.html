@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n django_bootstrap5 %}
 
 {% block title %}{% translate "Пользователи" %}{% endblock %}
 
@@ -13,15 +13,7 @@
     
     <div class="row">
         <div class="col-12">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-            
+            {% bootstrap_messages %}
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead class="table-light">

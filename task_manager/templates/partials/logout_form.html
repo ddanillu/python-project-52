@@ -1,0 +1,8 @@
+{% load i18n %}
+
+<form method="post" action="{% url 'logout' %}" id="logout-form" style="display: inline;">
+    {% csrf_token %}
+</form>
+<a href="#" class="nav-link" onclick="document.getElementById('logout-form').submit(); event.preventDefault();">
+    {% translate "Выход" %}
+</a>

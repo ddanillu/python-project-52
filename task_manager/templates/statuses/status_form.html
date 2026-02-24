@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 i18n %}
+{% block title %}
+{% if form.instance.pk %}
+    {% translate "Изменение статус" %}
+{% else %}
+    {% translate "Создание статуса" %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            {% bootstrap_messages %}
+            <h1 class="h2 mb-4">
+            {% if form.instance.pk %}
+                {% translate "Изменение статуса" %}
+            {% else %}
+                {% translate "Создание статуса" %}
+            {% endif %}
+            </h1>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% bootstrap_field form.name show_label=True %}
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        {% translate "Сохранить" %}
+                    </button>
+                    <a href="{% url 'statuses_list' %}" class="btn btn-secondary">
+                        {% translate "Отмена" %}
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

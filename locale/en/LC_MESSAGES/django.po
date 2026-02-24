@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 13:46+0300\n"
+"POT-Creation-Date: 2026-02-24 10:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,72 +18,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: task_manager/forms.py:10
+#: task_manager/forms.py:11 task_manager/forms.py:60
+#: task_manager/templates/statuses/status_list.html:25
 msgid "Имя"
 msgstr "Name"
 
-#: task_manager/forms.py:15
+#: task_manager/forms.py:16 task_manager/forms.py:61
 msgid "Фамилия"
 msgstr "Last name"
 
-#: task_manager/forms.py:20 task_manager/templates/users_list.html:30
+#: task_manager/forms.py:21 task_manager/forms.py:59
+#: task_manager/templates/users/users_list.html:22
 msgid "Имя пользователя"
 msgstr "User name"
 
-#: task_manager/forms.py:24
-msgid "Email"
-msgstr "Email"
-
-#: task_manager/forms.py:31
+#: task_manager/forms.py:28 task_manager/forms.py:44
 msgid "Пароль"
 msgstr "Password"
 
-#: task_manager/forms.py:32
+#: task_manager/forms.py:29 task_manager/forms.py:50
 msgid "Подтверждение пароля"
 msgstr "Password confirmation"
 
-#: task_manager/forms.py:37
+#: task_manager/forms.py:34
 msgid "Пароль минимум 8 символов"
 msgstr "Password minimum 8 characters"
 
-#: task_manager/templates/base.html:16
-msgid "Менеджер задач"
-msgstr "Task manager"
-
-#: task_manager/templates/base.html:43 task_manager/templates/users_list.html:4
-#: task_manager/templates/users_list.html:10
-msgid "Пользователи"
-msgstr "Users"
-
-#: task_manager/templates/base.html:46 task_manager/templates/login.html:3
-#: task_manager/templates/login.html:10
-msgid "Вход"
-msgstr "Login"
-
-#: task_manager/templates/base.html:49 task_manager/templates/form.html:7
-#: task_manager/templates/form.html:19
-msgid "Регистрация"
-msgstr "Register"
-
-#: task_manager/templates/form.html:5 task_manager/templates/form.html:17
-msgid "Изменение пользователя"
-msgstr "Update user"
-
-#: task_manager/templates/form.html:25
-msgid "Введите данные для создания аккаунта"
-msgstr "Enter your login details"
-
-#: task_manager/templates/form.html:39
-msgid "Сохранить"
-msgstr "Save"
-
-#: task_manager/templates/form.html:41
-msgid "Зарегистрироваться"
-msgstr "Register"
-
-#: task_manager/templates/form.html:49
-msgid "Уже есть аккаунт? Войти"
-msgstr "No account? Register"
+#: task_manager/forms.py:47
+msgid "Оставьте пустым для сохранения текущего"
+msgstr "Leave empty to keep current"
 
 #: task_manager/templates/index.html:3
 msgid "Главная"
@@ -97,48 +60,152 @@ msgstr "Welcome!"
 msgid "Сервис управления задачами"
 msgstr "Task management service"
 
-#: task_manager/templates/login.html:11
-msgid "Введите данные для входа"
-msgstr "Enter your login details"
+#: task_manager/templates/partials/logout_form.html:7
+msgid "Выход"
+msgstr "Logout"
 
-#: task_manager/templates/login.html:19
-msgid "Нет аккаунта? Регистрация"
-msgstr "No account? Register"
+#: task_manager/templates/partials/nav.html:5
+msgid "Менеджер задач"
+msgstr "Task manager"
 
-#: task_manager/templates/login.html:22
-msgid "Войти"
+#: task_manager/templates/partials/nav.html:32
+#: task_manager/templates/users/users_list.html:4
+#: task_manager/templates/users/users_list.html:10
+msgid "Пользователи"
+msgstr "Users"
+
+#: task_manager/templates/partials/nav.html:37
+#: task_manager/templates/statuses/status_list.html:4
+#: task_manager/templates/statuses/status_list.html:10
+msgid "Статусы"
+msgstr "Statuses"
+
+#: task_manager/templates/partials/nav.html:40
+msgid "Метки"
+msgstr "Labels"
+
+#: task_manager/templates/partials/nav.html:43
+msgid "Задачи"
+msgstr "Tasks"
+
+#: task_manager/templates/partials/nav.html:50
+#: task_manager/templates/users/login.html:3
+#: task_manager/templates/users/login.html:10
+msgid "Вход"
 msgstr "Login"
 
-#: task_manager/templates/user_delete.html:3
-#: task_manager/templates/user_delete.html:12
-msgid "Удаление пользователя"
-msgstr "Delete user"
+#: task_manager/templates/partials/nav.html:53
+#: task_manager/templates/users/form.html:7
+#: task_manager/templates/users/form.html:20
+msgid "Регистрация"
+msgstr "Register"
 
-#: task_manager/templates/user_delete.html:15
-msgid "Вы действительно хотите удалить пользователя"
-msgstr "Are you sure you want to delete user"
+#: task_manager/templates/statuses/status_delete.html:3
+#: task_manager/templates/statuses/status_delete.html:12
+msgid "Удаление статуса"
+msgstr "Delete status"
 
-#: task_manager/templates/user_delete.html:21
+#: task_manager/templates/statuses/status_delete.html:15
+msgid "Вы действительно хотите удалить статус"
+msgstr "Are you sure you want to delete status"
+
+#: task_manager/templates/statuses/status_delete.html:21
+#: task_manager/templates/users/user_delete.html:21
 msgid "Отменить"
 msgstr "Cancel"
 
-#: task_manager/templates/user_delete.html:24
-#: task_manager/templates/users_list.html:52
+#: task_manager/templates/statuses/status_delete.html:24
+#: task_manager/templates/statuses/status_list.html:45
+#: task_manager/templates/users/user_delete.html:24
+#: task_manager/templates/users/users_list.html:44
 msgid "Удалить"
 msgstr "Delete"
 
-#: task_manager/templates/users_list.html:31
-msgid "Полное имя"
-msgstr "Full name"
+#: task_manager/templates/statuses/status_form.html:5
+msgid "Изменение статус"
+msgstr "Update status"
 
-#: task_manager/templates/users_list.html:32
+#: task_manager/templates/statuses/status_form.html:7
+#: task_manager/templates/statuses/status_form.html:20
+msgid "Создание статуса"
+msgstr "Create status"
+
+#: task_manager/templates/statuses/status_form.html:18
+msgid "Изменение статуса"
+msgstr "Update status"
+
+#: task_manager/templates/statuses/status_form.html:30
+#: task_manager/templates/users/form.html:40
+msgid "Сохранить"
+msgstr "Save"
+
+#: task_manager/templates/statuses/status_form.html:33
+msgid "Отмена"
+msgstr "Cancel"
+
+#: task_manager/templates/statuses/status_list.html:12
+msgid "Создать статус"
+msgstr "Create status"
+
+#: task_manager/templates/statuses/status_list.html:26
+#: task_manager/templates/users/users_list.html:24
 msgid "Дата создания"
 msgstr "Created"
 
-#: task_manager/templates/users_list.html:49
+#: task_manager/templates/statuses/status_list.html:42
+#: task_manager/templates/users/users_list.html:41
 msgid "Изменить"
 msgstr "Update"
 
-#: task_manager/templates/users_list.html:59
+#: task_manager/templates/statuses/status_list.html:52
+msgid "Статусы не найдены"
+msgstr "No statuses found"
+
+#: task_manager/templates/users/form.html:5
+#: task_manager/templates/users/form.html:18
+msgid "Изменение пользователя"
+msgstr "Update user"
+
+#: task_manager/templates/users/form.html:26
+msgid "Введите данные для создания аккаунта"
+msgstr "Enter your login details"
+
+#: task_manager/templates/users/form.html:42
+msgid "Зарегистрироваться"
+msgstr "Register"
+
+#: task_manager/templates/users/form.html:50
+msgid "Уже есть аккаунт? Войти"
+msgstr "No account? Register"
+
+#: task_manager/templates/users/login.html:11
+msgid "Введите данные для входа"
+msgstr "Enter your login details"
+
+#: task_manager/templates/users/login.html:19
+msgid "Нет аккаунта? Регистрация"
+msgstr "No account? Register"
+
+#: task_manager/templates/users/login.html:22
+msgid "Войти"
+msgstr "Login"
+
+#: task_manager/templates/users/user_delete.html:3
+#: task_manager/templates/users/user_delete.html:12
+msgid "Удаление пользователя"
+msgstr "Delete user"
+
+#: task_manager/templates/users/user_delete.html:15
+msgid "Вы действительно хотите удалить пользователя"
+msgstr "Are you sure you want to delete user"
+
+#: task_manager/templates/users/users_list.html:23
+msgid "Полное имя"
+msgstr "Full name"
+
+#: task_manager/templates/users/users_list.html:51
 msgid "Пользователи не найдены"
 msgstr "No users found"
+
+#~ msgid "Email"
+#~ msgstr "Email"
