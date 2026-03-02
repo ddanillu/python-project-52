@@ -73,4 +73,19 @@ urlpatterns += i18n_patterns(
         views.TaskDeleteView.as_view(),
         name="task_delete",
     ),
+    # Метки
+    path("labels/", views.LabelListView.as_view(), name="labels_list"),
+    path(
+        "labels/create/", views.LabelCreateView.as_view(), name="label_create"
+    ),
+    path(
+        "labels/<int:pk>/update/",
+        views.LabelUpdateView.as_view(),
+        name="label_update",
+    ),
+    path(
+        "labels/<int:pk>/delete/",
+        views.LabelDeleteView.as_view(),
+        name="label_delete",
+    ),
 )

@@ -12,7 +12,15 @@ class Status(models.Model):
 
 
 class Label(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=True, verbose_name=_("имя"))
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("Метка")
+        verbose_name_plural = _("Метки")
+
+    def __str__(self):
+        return self.name
 
 
 class Task(models.Model):
@@ -30,13 +38,7 @@ class Task(models.Model):
         related_name="tasks_executed",
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    label = models.ForeignKey(
-        Label,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="tasks_labeled",
-    )
+    labels = models.ManyToManyField(Label, verbose_name="метки", blank=True)
 
     class Meta:
         verbose_name = _("Задача")

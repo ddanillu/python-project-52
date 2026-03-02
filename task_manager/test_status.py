@@ -31,10 +31,12 @@ class StatusTests(TestCase):
         self.assertContains(response, "Новый")
 
     def test_create_form(self):
+        """форма для создания"""
         response = self.client.get(reverse("status_create"))
         self.assertEqual(response.status_code, 200)
 
     def test_status_create(self):
+        """создание статуса"""
         response = self.client.post(
             reverse("status_create"),
             {
@@ -46,6 +48,7 @@ class StatusTests(TestCase):
         self.assertTrue(Status.objects.filter(name="test").exists())
 
     def test_status_update(self):
+        """обновление статуса"""
         response = self.client.get(
             reverse("status_update", args=[self.status1.pk])
         )
@@ -60,7 +63,7 @@ class StatusTests(TestCase):
         self.assertRedirects(response, reverse("statuses_list"))
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertEqual(len(messages_list), 1)
-        self.assertIn("Статус не может быть удален", str(messages_list[0]))
+        self.assertIn("Невозможно удалить статус", str(messages_list[0]))
         self.assertTrue(Status.objects.filter(pk=self.status1.pk).exists())
 
     def test_delete_is_not_used_status(self):

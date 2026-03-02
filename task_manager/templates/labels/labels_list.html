@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load i18n django_bootstrap5 %}
+
+{% block title %}{% translate "Метки" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1>{% translate "Метки" %}</h1>
+            <a href="{% url 'label_create' %}" class="btn btn-primary">
+                <i class="bi bi-plus"></i> {% translate "Создать метку" %}
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            {% bootstrap_messages %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>{% translate "Имя" %}</th>
+                            <th>{% translate "Дата создания" %}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for label in labels %} 
+                        <tr>
+                            <td>{{ label.id }}</td>
+                            <td>
+                                {{ label.name }}
+                            </td>
+                            <td>{{ label.created_at|date:"d.m.Y H:i" }}</td>
+                            <td>
+                                <a href="{% url 'label_update' label.pk %}" class="btn btn-outline-primary btn-sm">
+                                    {% translate "Изменить" %}
+                                </a>
+                                <a href="{% url 'label_delete' label.pk %}" class="btn btn-outline-danger btn-sm">
+                                    {% translate "Удалить" %}
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                {% translate "Метки не найдены" %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

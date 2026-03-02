@@ -15,8 +15,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import RegisterForm, StatusForm, UserForm
-from .models import Status, Task
+from .forms import RegisterForm, StatusForm, UserForm, LabelForm, TaskForm
+from .models import Status, Task, Label
 
 
 # Главная
@@ -128,7 +128,9 @@ class StatusCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("statuses_list")
 
     def get_success_message(self, cleaned_data):
-        return _("Статус '%(name)s' успешно создан") % {'name': cleaned_data['name']}
+        return _("Статус '%(name)s' успешно создан") % {
+            "name": cleaned_data["name"]
+        }
 
 
 # Редактирование статуса (доступно только аунтифицированным пользователям)
@@ -139,7 +141,9 @@ class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("statuses_list")
 
     def get_success_message(self, cleaned_data):
-        return _("Статус '%(name)s' успешно изменен") % {'name': cleaned_data['name']}
+        return _("Статус '%(name)s' успешно изменен") % {
+            "name": cleaned_data["name"]
+        }
 
 
 # Удаление статуса (если статус не связан ни с одной задача)
@@ -152,13 +156,16 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         obj = self.get_object()
         if obj.task_set.exists():
             messages.error(
-                self.request, _("Статус не может быть удален - связан с задачами")
+                self.request,
+                _("Невозможно удалить статус, потому что он используется"),
             )
             return redirect("statuses_list")
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_message(self, cleaned_data):
-        return _("Статус '%(name)s' успешно удален") % {'name': self.object.name}
+        return _("Статус '%(name)s' успешно удален") % {
+            "name": self.object.name
+        }
 
 
 # Список задач
@@ -177,7 +184,7 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 # Создание задачи
 class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Task
-    fields = ["name", "description", "status", "executor"]
+    form_class = TaskForm
     template_name = "tasks/task_form.html"
     success_url = reverse_lazy("tasks_list")
 
@@ -186,18 +193,22 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_message(self, cleaned_data):
-        return _("Задача '%(name)s' успешно создана") % {'name': cleaned_data['name']}
+        return _("Задача '%(name)s' успешно создана") % {
+            "name": cleaned_data["name"]
+        }
 
 
 # Изменение задачи
 class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Task
-    fields = ["name", "description", "status", "executor"]
+    form_class = TaskForm
     template_name = "tasks/task_form.html"
     success_url = reverse_lazy("tasks_list")
 
     def get_success_message(self, cleaned_data):
-        return _("Задача '%(name)s' успешно изменена") % {'name': cleaned_data['name']}
+        return _("Задача '%(name)s' успешно изменена") % {
+            "name": cleaned_data["name"]
+        }
 
 
 # Удаление задачи (только автором)
@@ -214,9 +225,68 @@ class TaskDeleteView(
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj.author != self.request.user:
-            messages.error(self.request, _("Задачу может удалить только ее автор"))
+            messages.error(
+                self.request, _("Задачу может удалить только ее автор")
+            )
             return redirect("tasks_list")
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_message(self, cleaned_data):
-       return _("Задача '%(name)s' успешно создана") % {'name': cleaned_data['name']}
+        return _("Задача '%(name)s' успешно удалена") % {
+            "name": self.object.name
+        }
+
+
+# Список меток
+class LabelListView(LoginRequiredMixin, ListView):
+    model = Label
+    template_name = "labels/labels_list.html"
+    context_object_name = "labels"
+
+
+# Создание метки
+class LabelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Label
+    form_class = LabelForm
+    template_name = "labels/label_form.html"
+    success_url = reverse_lazy("labels_list")
+
+    def get_success_message(self, cleaned_data):
+        return _("Метка '%(name)s' успешно создана") % {
+            "name": cleaned_data["name"]
+        }
+
+
+# Изменение метки
+class LabelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Label
+    form_class = LabelForm
+    template_name = "labels/label_form.html"
+    success_url = reverse_lazy("labels_list")
+
+    def get_success_message(self, cleaned_data):
+        return _("Метка '%(name)s' успешно изменена") % {
+            "name": cleaned_data["name"]
+        }
+
+
+# Удаление метки
+class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Label
+    template_name = "labels/label_delete.html"
+    success_url = reverse_lazy("labels_list")
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.task_set.exists():
+            messages.error(
+                self.request,
+                _("Невозможно удалить метку, потому что она используется"),
+            )
+            return redirect("labels_list")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_success_message(self, cleaned_data):
+        return _("Метка '%(name)s' успешно удалена") % {
+            "name": self.object.name
+        }

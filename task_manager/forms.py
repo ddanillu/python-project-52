@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-from .models import Status, Task
+from .models import Status, Task, Label
 
 
 class RegisterForm(UserCreationForm):
@@ -101,16 +101,30 @@ class StatusForm(forms.ModelForm):
         widgets = {"name": forms.TextInput(attrs={"class": "form-control"})}
 
 
+class LabelForm(forms.ModelForm):
+    class Meta:
+        model = Label
+        fields = ["name"]
+        widgets = {"name": forms.TextInput(attrs={"class": "form-control"})}
+
+
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ["name", "description", "status", "executor", "label"]
-        labels = {
-            "label": _("Метки"),
-        }
+        fields = ["name", "description", "status", "executor", "labels"]
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
             "description": forms.Textarea(
                 attrs={"class": "form-control", "rows": 3}
             ),
+            "labels": forms.SelectMultiple(
+                attrs={
+                    "class": "form-control",
+                    "multiple": "multiple",
+                },
+            ),
+        }
+        help_texts = {
+            "labels": ("Удерживайте Ctrl (Cmd на Mac) "
+           "для выбора нескольких меток")
         }

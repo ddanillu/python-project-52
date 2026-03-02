@@ -42,18 +42,20 @@
           <div class="col">{{ object.created_at|date:"d.m.Y H:i" }}</div>
         </div>
         
-        {% if object.label %}
+        {% if object.labels.exists %}
         <div class="row p-2">
-          <div class="col fw-bold">
-            <h6>{% translate "Метки:" %}</h6>
-          </div>
-          <div class="col">
+          <div class="col-12">
+            <div class="fw-bold mb-2">{% translate "Метки:" %}</div>
+            <div>
             <ul class="mb-0">
-              <li>{{ object.label.name }}</li>
+            {% for label in object.labels.all %}
+              <li>{{ label.name }}</li>
+            {% endfor %}
             </ul>
           </div>
         </div>
         {% endif %}
+
         
         <div class="row p-2">
           <div class="col">

@@ -2,9 +2,9 @@
 {% load django_bootstrap5 i18n %}
 {% block title %}
 {% if form.instance.pk %}
-    {% translate "Изменение статуса" %}
+    {% translate "Изменение метки" %}
 {% else %}
-    {% translate "Создание статуса" %}
+    {% translate "Создание метки" %}
 {% endif %}
 {% endblock %}
 
@@ -15,9 +15,9 @@
             {% bootstrap_messages %}
             <h1 class="h2 mb-4">
             {% if form.instance.pk %}
-                {% translate "Изменение статуса" %}
+                {% translate "Изменение метки" %}
             {% else %}
-                {% translate "Создание статуса" %}
+                {% translate "Создание метки" %}
             {% endif %}
             </h1>
 
@@ -29,7 +29,7 @@
                     <button type="submit" class="btn btn-primary">
                         {% translate "Сохранить" %}
                     </button>
-                    <a href="{% url 'statuses_list' %}" class="btn btn-secondary">
+                    <a href="{% url 'labels_list' %}" class="btn btn-secondary">
                         {% translate "Отмена" %}
                     </a>
                 </div>
