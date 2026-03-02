@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 i18n %}
+{% block title %}
+{% if form.instance.pk %}
+    {% translate "Изменение задачи" %}
+{% else %}
+    {% translate "Создание задачи" %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            {% bootstrap_messages %}
+            <h1 class="h2 mb-4">
+            {% if form.instance.pk %}
+                {% translate "Изменение задачи" %}
+            {% else %}
+                {% translate "Создание задачи" %}
+            {% endif %}
+            </h1>
+
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+
+                
+                <button type="submit" class="btn btn-primary">
+                    {% if form.instance.pk %}
+                        {% translate "Изменить" %}
+                    {% else %}
+                        {% translate "Создать" %}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

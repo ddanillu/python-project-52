@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load i18n django_bootstrap5 %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+<div class="container wrapper flex-grow-1">
+  <h1 class="my-4">{% translate "Просмотр задачи" %}</h1>
+  
+  <div class="card">
+    <div class="card-header bg-secondary text-white">
+      <h2>{{ object.name }}</h2>
+    </div>
+    
+    <div class="card-body bg-light">
+      {% if object.description %}
+      <p>{{ object.description }}</p>
+      {% endif %}
+      
+      <hr>
+      
+      <div class="container">
+        <div class="row p-2">
+          <div class="col">{% translate "Автор" %}</div>
+          <div class="col">{{ object.author.get_full_name|default:object.author.username }}</div>
+        </div>
+        
+        <div class="row p-2">
+          <div class="col">{% translate "Исполнитель" %}</div>
+          <div class="col">{{ object.executor.get_full_name|default:"—" }}</div>
+        </div>
+        
+        <div class="row p-2">
+          <div class="col">{% translate "Статус" %}</div>
+          <div class="col">
+            <span class="badge bg-primary">{{ object.status.name }}</span>
+          </div>
+        </div>
+        
+        <div class="row p-2">
+          <div class="col">{% translate "Дата создания" %}</div>
+          <div class="col">{{ object.created_at|date:"d.m.Y H:i" }}</div>
+        </div>
+        
+        {% if object.label %}
+        <div class="row p-2">
+          <div class="col fw-bold">
+            <h6>{% translate "Метки:" %}</h6>
+          </div>
+          <div class="col">
+            <ul class="mb-0">
+              <li>{{ object.label.name }}</li>
+            </ul>
+          </div>
+        </div>
+        {% endif %}
+        
+        <div class="row p-2">
+          <div class="col">
+            <a href="{% url 'task_update' object.pk %}" class="me-3">
+              {% translate "Изменить" %}
+            </a>
+            <br>
+            <a href="{% url 'task_delete' object.pk %}">
+              {% translate "Удалить" %}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
