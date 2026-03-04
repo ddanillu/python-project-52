@@ -31,6 +31,9 @@ test-tasks:
 test-labels:
 	uv run manage.py test task_manager.test_labels -v2
 
+test-filter:
+	uv run manage.py test task_manager.test_filter -v2
+
 extract:
 	uv run django-admin makemessages -l en
 

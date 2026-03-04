@@ -5,20 +5,7 @@ from django.contrib.auth.models import User
 
 
 class UserTests(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.user1 = User.objects.create_user(
-            username="testuser",
-            first_name="Тест",
-            last_name="Пользователь",
-            password="testpass123",
-        )
-        cls.user2 = User.objects.create_user(
-            username="otheruser",
-            first_name="Другой",
-            last_name="Пользователь",
-            password="otherpass123",
-        )
+    fixtures = ["users.json"]
 
     def test_users_list_unauthenticated(self):
         """список пользователей без входа"""
@@ -49,13 +36,13 @@ class UserTests(TestCase):
     def test_user_update_own_allowed(self):
         """редактирование своего пользователя"""
         self.client.login(username="testuser", password="testpass123")
-        response = self.client.get(reverse("user_update", args=[self.user1.pk]))
+        response = self.client.get(reverse("user_update", args=[1]))
         self.assertEqual(response.status_code, 200)
 
     def test_user_update_other_forbidden(self):
         """редактирование чужого"""
         self.client.login(username="testuser", password="testpass123")
-        response = self.client.get(reverse("user_update", args=[self.user2.pk]))
+        response = self.client.get(reverse("user_update", args=[2]))
 
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertEqual(len(messages_list), 1)
@@ -64,17 +51,15 @@ class UserTests(TestCase):
     def test_user_delete_own_allowed(self):
         """удаление своего пользователя"""
         self.client.login(username="testuser", password="testpass123")
-        response = self.client.get(reverse("user_delete", args=[self.user1.pk]))
+        response = self.client.get(reverse("user_delete", args=[1]))
         self.assertEqual(response.status_code, 200)
 
     def test_user_delete_post_deletes_user(self):
         """удаление своего + редирект"""
         self.client.login(username="testuser", password="testpass123")
-        response = self.client.post(
-            reverse("user_delete", args=[self.user1.pk])
-        )
+        response = self.client.post(reverse("user_delete", args=[1]))
         self.assertRedirects(response, reverse("users_list"))
-        self.assertFalse(User.objects.filter(pk=self.user1.pk).exists())
+        self.assertFalse(User.objects.filter(pk=1).exists())
 
     def test_login_post_redirects_to_tasks(self):
         """После логина — редирект на главную"""

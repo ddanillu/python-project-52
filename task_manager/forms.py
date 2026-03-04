@@ -98,6 +98,7 @@ class StatusForm(forms.ModelForm):
     class Meta:
         model = Status
         fields = ["name"]
+        labels = {"name": _("Имя")}
         widgets = {"name": forms.TextInput(attrs={"class": "form-control"})}
 
 
@@ -105,6 +106,7 @@ class LabelForm(forms.ModelForm):
     class Meta:
         model = Label
         fields = ["name"]
+        labels = {"name": _("Имя")}
         widgets = {"name": forms.TextInput(attrs={"class": "form-control"})}
 
 
@@ -112,6 +114,13 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ["name", "description", "status", "executor", "labels"]
+        labels = {
+            "name": _("Имя"),
+            "description": _("Описание"),
+            "status": _("Статус"),
+            "executor": _("Исполнитель"),
+            "labels": _("Метки"),
+        }
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
             "description": forms.Textarea(
@@ -125,6 +134,13 @@ class TaskForm(forms.ModelForm):
             ),
         }
         help_texts = {
-            "labels": ("Удерживайте Ctrl (Cmd на Mac) "
-           "для выбора нескольких меток")
+            "labels": _(
+                "Удерживайте Ctrl (Cmd на Mac) для выбора нескольких меток"
+            )
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["executor"].queryset = User.objects.filter(
+            is_active=True
+        ).exclude(is_staff=True, is_superuser=True)

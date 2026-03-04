@@ -1,0 +1,18 @@
+[
+  {
+    "model": "task_manager.status",
+    "pk": 1,
+    "fields": {
+      "name": "Новая",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "task_manager.status",
+    "pk": 2,
+    "fields": {
+      "name": "Выполнена",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  }
+]

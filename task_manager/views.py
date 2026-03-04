@@ -15,8 +15,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django_filters.views import FilterView
 from .forms import RegisterForm, StatusForm, UserForm, LabelForm, TaskForm
 from .models import Status, Task, Label
+from .filters import TaskFilter
 
 
 # Главная
@@ -79,7 +81,7 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if obj != self.request.user:
             messages.error(
                 self.request,
-                "У вас нет прав для изменения другого пользователя.",
+                _("У вас нет прав для изменения другого пользователя"),
             )
             return redirect("users_list")
         return super().dispatch(request, *args, **kwargs)
@@ -100,13 +102,14 @@ class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if obj != self.request.user:
             messages.error(
                 self.request,
-                "У вас нет прав для удаления другого пользователя.",
+                _("У вас нет прав для удаления другого пользователя"),
             )
             return redirect("users_list")
 
         if obj.tasks_authored.exists():
             messages.error(
-                self.request, "Нельзя удалить пользователя - у него есть задачи"
+                self.request,
+                _("Нельзя удалить пользователя - у него есть задачи"),
             )
             return redirect("users_list")
 
@@ -169,8 +172,9 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
 
 # Список задач
-class TaskListView(LoginRequiredMixin, ListView):
+class TaskListView(LoginRequiredMixin, FilterView):
     model = Task
+    filterset_class = TaskFilter
     template_name = "tasks/task_list.html"
     context_object_name = "tasks"
 

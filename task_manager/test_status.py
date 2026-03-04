@@ -1,25 +1,11 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Status, Task
+from .models import Status
 
 
 class StatusTests(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.user = User.objects.create_user(
-            username="testuser",
-            first_name="Тест",
-            last_name="Пользователь",
-            password="testpass123",
-        )
-        cls.status1 = Status.objects.create(name="Новый")
-        cls.status2 = Status.objects.create(name="В работе")
-
-        cls.task1 = Task.objects.create(
-            name="Тест", status=cls.status1, author=cls.user
-        )
+    fixtures = ["users.json", "statuses.json", "tasks.json"]
 
     def setUp(self):
         self.client.login(username="testuser", password="testpass123")
@@ -28,7 +14,7 @@ class StatusTests(TestCase):
         """список статусов"""
         response = self.client.get(reverse("statuses_list"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Новый")
+        self.assertContains(response, "Новая")
 
     def test_create_form(self):
         """форма для создания"""
@@ -49,27 +35,21 @@ class StatusTests(TestCase):
 
     def test_status_update(self):
         """обновление статуса"""
-        response = self.client.get(
-            reverse("status_update", args=[self.status1.pk])
-        )
+        response = self.client.get(reverse("status_update", args=[1]))
         self.assertEqual(response.status_code, 200)
 
     def test_delete_in_use_status(self):
-        """Статус нельзя удалить, если связан с задачей"""
-        response = self.client.post(
-            reverse("status_delete", args=[self.status1.pk])
-        )
+        """Статус нельзя удалить, если он связан с задачей"""
+        response = self.client.post(reverse("status_delete", args=[1]))
 
         self.assertRedirects(response, reverse("statuses_list"))
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertEqual(len(messages_list), 1)
         self.assertIn("Невозможно удалить статус", str(messages_list[0]))
-        self.assertTrue(Status.objects.filter(pk=self.status1.pk).exists())
+        self.assertTrue(Status.objects.filter(pk=1).exists())
 
     def test_delete_is_not_used_status(self):
         """Статус можно удалить, если нет задач"""
-        status3 = Status.objects.create(name="Свободный")
-
-        response = self.client.post(reverse("status_delete", args=[status3.pk]))
+        response = self.client.post(reverse("status_delete", args=[2]))
         self.assertRedirects(response, reverse("statuses_list"))
-        self.assertFalse(Status.objects.filter(pk=status3.pk).exists())
+        self.assertFalse(Status.objects.filter(pk=2).exists())
