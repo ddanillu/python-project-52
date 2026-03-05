@@ -17,12 +17,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN')
-ROLLBAR_ENVIRONMENT = os.getenv('ROLLBAR_ENVIRONMENT')
-
 rollbar.init(
-    ROLLBAR_ACCESS_TOKEN,
-    environment=ROLLBAR_ENVIRONMENT,
+    access_token=os.getenv('ROLLBAR_ACCESS_TOKEN'),
+    environment='production' if os.getenv('DEBUG', 'True').lower() == 'false' else 'development',
+    root=BASE_DIR,
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
