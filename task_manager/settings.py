@@ -17,15 +17,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 rollbar.init(
     access_token=os.getenv('ROLLBAR_ACCESS_TOKEN'),
     environment='production' if os.getenv('DEBUG', 'True').lower() == 'false' else 'development',
     root=BASE_DIR,
 )
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
