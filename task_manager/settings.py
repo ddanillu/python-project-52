@@ -20,20 +20,14 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-rollbar.init(
-    access_token=os.getenv('ROLLBAR_ACCESS_TOKEN'),
-    environment='production' if os.getenv('DEBUG', 'True').lower() == 'false' else 'development',
-    root=BASE_DIR,
-)
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 ALLOWED_HOSTS = ['python-project-52-yx53.onrender.com', 'localhost', '127.0.0.1']
 
@@ -65,6 +59,14 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
+
+
+ROLLBAR = {
+    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
+    'environment': 'production' if not DEBUG else 'development',
+    'root': BASE_DIR,
+    'branch': 'main',
+}
 
 ROOT_URLCONF = 'task_manager.urls'
 
