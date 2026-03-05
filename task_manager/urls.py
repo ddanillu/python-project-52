@@ -23,7 +23,6 @@ from . import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
-    path('test-rollbar/', lambda r: (None.explode(), HttpResponse("ok")), name='test_rollbar'),
 ]
 
 urlpatterns += i18n_patterns(
