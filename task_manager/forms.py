@@ -30,8 +30,14 @@ class RegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["password1"].help_text = _("Пароль минимум 8 символов")
+        self.fields["password1"].help_text = _("Пароль минимум 3 символов")
         self.fields["password2"].help_text = None
+
+    def clean_password1(self):
+        password1 = self.cleaned_data.get('password1')
+        if password1 and len(password1) < 3:
+            raise forms.ValidationError(_("Пароль должен содержать минимум 3 символа"))
+        return password1
 
 
 class LoginForm(AuthenticationForm):

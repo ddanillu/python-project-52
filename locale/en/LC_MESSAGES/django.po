@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-10 16:32+0300\n"
+"POT-Creation-Date: 2026-03-10 17:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: task_manager/filters.py:10 task_manager/forms.py:120
+#: task_manager/filters.py:10 task_manager/forms.py:126
 #: task_manager/templates/tasks/task_detail.html:34
 #: task_manager/templates/tasks/task_list.html:54
 msgid "Статус"
 msgstr "Status"
 
-#: task_manager/filters.py:16 task_manager/forms.py:121
+#: task_manager/filters.py:16 task_manager/forms.py:127
 #: task_manager/templates/tasks/task_detail.html:29
 #: task_manager/templates/tasks/task_list.html:56
 msgid "Исполнитель"
@@ -38,51 +38,55 @@ msgstr "Label"
 msgid "Только свои задачи"
 msgstr "Only my tasks"
 
-#: task_manager/forms.py:9 task_manager/forms.py:59 task_manager/forms.py:101
-#: task_manager/forms.py:109 task_manager/forms.py:118
+#: task_manager/forms.py:9 task_manager/forms.py:65 task_manager/forms.py:107
+#: task_manager/forms.py:115 task_manager/forms.py:124
 #: task_manager/templates/labels/labels_list.html:24
 #: task_manager/templates/statuses/status_list.html:24
 #: task_manager/templates/tasks/task_list.html:53
 msgid "Имя"
 msgstr "Name"
 
-#: task_manager/forms.py:11 task_manager/forms.py:60
+#: task_manager/forms.py:11 task_manager/forms.py:66
 msgid "Фамилия"
 msgstr "Last name"
 
-#: task_manager/forms.py:14 task_manager/forms.py:58
+#: task_manager/forms.py:14 task_manager/forms.py:64
 #: task_manager/templates/users/users_list.html:21
 msgid "Имя пользователя"
 msgstr "User name"
 
-#: task_manager/forms.py:27 task_manager/forms.py:43
+#: task_manager/forms.py:27 task_manager/forms.py:49
 msgid "Пароль"
 msgstr "Password"
 
-#: task_manager/forms.py:28 task_manager/forms.py:49
+#: task_manager/forms.py:28 task_manager/forms.py:55
 msgid "Подтверждение пароля"
 msgstr "Password confirmation"
 
 #: task_manager/forms.py:33
-msgid "Пароль минимум 8 символов"
-msgstr "Password minimum 8 characters"
+msgid "Пароль минимум 3 символов"
+msgstr "Password minimum 3 characters"
 
-#: task_manager/forms.py:46
+#: task_manager/forms.py:39
+msgid "Пароль должен содержать минимум 3 символа"
+msgstr "Password must contain minimum 3 characters"
+
+#: task_manager/forms.py:52
 msgid "Оставьте пустым для сохранения текущего"
 msgstr "Leave empty to keep current"
 
-#: task_manager/forms.py:119
+#: task_manager/forms.py:125
 msgid "Описание"
 msgstr "Description"
 
-#: task_manager/forms.py:122 task_manager/models.py:20
+#: task_manager/forms.py:128 task_manager/models.py:20
 #: task_manager/templates/labels/labels_list.html:4
 #: task_manager/templates/labels/labels_list.html:10
 #: task_manager/templates/partials/nav.html:40
 msgid "Метки"
 msgstr "Labels"
 
-#: task_manager/forms.py:138
+#: task_manager/forms.py:144
 msgid "Удерживайте Ctrl (Cmd на Mac) для выбора нескольких меток"
 msgstr "Hold Ctrl (Cmd on Mac) to select multiple labels"
 
