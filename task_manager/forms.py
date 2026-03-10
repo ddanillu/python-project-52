@@ -6,8 +6,6 @@ from .models import Status, Task, Label
 
 
 class RegisterForm(UserCreationForm):
-    # first_name и last_name делаем необязательными, чтобы регистрация
-    # проходила даже если фронт/тесты не заполняют эти поля
     first_name = forms.CharField(max_length=30, required=False, label=_("Имя"))
     last_name = forms.CharField(
         max_length=150, required=False, label=_("Фамилия")

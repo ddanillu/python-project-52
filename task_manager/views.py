@@ -52,26 +52,34 @@ class RegisterView(SuccessMessageMixin, CreateView):
     success_message = _("Пользователь успешно зарегистрирован")
 
 
-# Логин → редирект на главную
+# Логин → редирект на главную + сообщение
 class CustomLoginView(LoginView):
     template_name = "users/login.html"
 
+    def form_valid(self, form):
+        messages.success(self.request, _("Вы залогинены"))
+        return super().form_valid(form)
 
-# Выход + редирект на главную
+
+# Выход + редирект на главную + сообщение
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy("index")
 
     def dispatch(self, request, *args, **kwargs):
         logout(request)
+        messages.success(self.request, _("Вы разлогинены"))
         return redirect(self.next_page)
 
 
 # Редактирование (только своего юзера)
-class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UserUpdateView(
+    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView
+):
     model = User
     form_class = UserForm
     template_name = "users/form.html"
     success_url = reverse_lazy("users_list")
+    success_message = _("Пользователь успешно изменен")
 
     def test_func(self):
         obj = self.get_object()
@@ -82,17 +90,20 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if obj != self.request.user:
             messages.error(
                 self.request,
-                _("У вас нет прав для изменения другого пользователя"),
+                _("У вас нет прав для изменения"),
             )
             return redirect("users_list")
         return super().dispatch(request, *args, **kwargs)
 
 
 # Удаление (только своего юзера)
-class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class UserDeleteView(
+    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView
+):
     model = User
     template_name = "users/user_delete.html"
     success_url = reverse_lazy("users_list")
+    success_message = _("Пользователь успешно удален")
 
     def test_func(self):
         obj = self.get_object()
