@@ -4,6 +4,7 @@ exclude = ["migrations", "settings.py", "manage.py"]
 [lint.per-file-ignores]
 # init modules can contain the local imports, logic, unused imports
 "__init__.py" = ["F401"]
+"**/test_settings.py" = ["F403"]
 
 [lint]
 preview = true
