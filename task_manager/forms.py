@@ -36,7 +36,9 @@ class RegisterForm(UserCreationForm):
     def clean_password1(self):
         password1 = self.cleaned_data.get('password1')
         if password1 and len(password1) < 3:
-            raise forms.ValidationError(_("Пароль должен содержать минимум 3 символа"))
+            raise forms.ValidationError(
+                _("Пароль должен содержать минимум 3 символа")
+                )
         return password1
 
 
