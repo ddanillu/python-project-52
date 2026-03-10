@@ -10,3 +10,40 @@
 ### Available Application
 Здесь вы можете посмотреть результат:
 [Link to the application](https://python-project-52-yx53.onrender.com)
+
+### Описание проекта
+
+Task Manager — учебное Django‑приложение в стиле классического таск‑трекера.  
+Пользователь может регистрироваться, создавать задачи, назначать им статусы и метки, а также фильтровать задачи по различным параметрам.
+
+### Основной стек
+
+- **Backend**: Django 6
+- **База данных**: SQLite (по умолчанию), PostgreSQL на проде
+- **Frontend**: Django templates + `django-bootstrap5`
+- **Инфраструктура**: Render, GitHub Actions, SonarQube, Rollbar, WhiteNoise
+
+### Локальный запуск
+
+```bash
+uv sync              # установка зависимостей
+cp .env.example .env # при наличии шаблона, либо создайте .env вручную
+uv run manage.py migrate
+uv run manage.py runserver
+```
+
+Минимальный набор переменных окружения (файл `.env`):
+
+```bash
+SECRET_KEY=your-secret-key
+DEBUG=True
+DATABASE_URL=sqlite:///db.sqlite3
+ROLLBAR_ACCESS_TOKEN=your-rollbar-token  # опционально
+```
+
+### Полезные команды Makefile
+
+- **Установка зависимостей**: `make install`
+- **Проверка стиля (ruff)**: `make lint`
+- **Запуск тестов**: `make test`
+- **Покрытие тестами + отчёт**: `make test-coverage`

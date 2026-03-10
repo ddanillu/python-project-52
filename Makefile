@@ -35,7 +35,7 @@ test-filter:
 	uv run manage.py test tests.test_filter -v2
 
 test-coverage:
-	uv run coverage run --source=task_manager manage.py test --settings=task_manager.test_settings && \
+	uv run coverage run --source=task_manager manage.py test && \
 	uv run coverage xml
 
 extract:
