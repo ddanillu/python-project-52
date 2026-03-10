@@ -17,15 +17,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls.i18n import i18n_patterns
 from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
-]
-
-urlpatterns += i18n_patterns(
     path("", views.IndexView.as_view(), name="index"),
     # Пользователи
     path("users/", views.UserListView.as_view(), name="users_list"),
@@ -88,4 +84,4 @@ urlpatterns += i18n_patterns(
         views.LabelDeleteView.as_view(),
         name="label_delete",
     ),
-)
+]
