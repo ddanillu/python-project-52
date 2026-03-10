@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.models import User
+from task_manager.forms import UserForm, RegisterForm
 
 
 class UserTests(TestCase):
@@ -69,3 +70,83 @@ class UserTests(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Добро")
+
+
+class UserFormTests(TestCase):
+    fixtures = ["users.json"]
+
+    def test_user_form_change_password(self):
+        """Сохранение нового пароля через форму"""
+        user = User.objects.first()
+        form = UserForm(
+            instance=user,
+            data={
+                "username": user.username,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "password1": "newstrongpass123",
+                "password2": "newstrongpass123",
+            },
+        )
+        self.assertTrue(form.is_valid())
+        updated = form.save()
+        self.assertTrue(updated.check_password("newstrongpass123"))
+
+
+class RegisterFormTests(TestCase):
+    fixtures = ["users.json"]
+
+    def test_register_form_duplicate_username(self):
+        """RegisterForm: дублирующийся username не проходит"""
+        existing = User.objects.first()
+        form = RegisterForm(
+            data={
+                "first_name": "New",
+                "last_name": "Name",
+                "username": existing.username,
+                "password1": "somepass123",
+                "password2": "somepass123",
+            }
+        )
+        self.assertFalse(form.is_valid())
+        self.assertIn("username", form.errors)
+
+    def test_register_form_password_mismatch(self):
+        """RegisterForm: пароли не совпадают"""
+        form = RegisterForm(
+            data={
+                "first_name": "Test",
+                "last_name": "User",
+                "username": "new-user-xyz",
+                "password1": "pass1",
+                "password2": "pass2",
+            }
+        )
+        self.assertFalse(form.is_valid())
+        self.assertIn("password2", form.errors)
+
+
+class UserMessagesTests(TestCase):
+    def test_register_success_message_and_redirect(self):
+        """После регистрации: редирект на /login/ и сообщение"""
+        response = self.client.post(
+            reverse("register"),
+            {
+                "first_name": "Test",
+                "last_name": "User",
+                "username": "newuser2",
+                "password1": "newpass123",
+                "password2": "newpass123",
+            },
+            follow=True,
+        )
+        self.assertEqual(response.resolver_match.view_name, "login")
+        self.assertContains(response, "Пользователь успешно зарегистрирован")
+
+
+class IndexTests(TestCase):
+    def test_index_page_renders(self):
+        """Главная страница отдается и содержит приветствие"""
+        response = self.client.get(reverse("index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Менеджер задач")

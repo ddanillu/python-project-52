@@ -49,6 +49,17 @@ class LabelTests(TestCase):
         self.assertRedirects(response, reverse("labels_list"))
         self.assertEqual(Label.objects.get(pk=1).name, "updated-bug")
 
+    def test_label_create_duplicate_name_invalid(self):
+        """нельзя создать метку с уже существующим именем"""
+        response = self.client.post(
+            reverse("label_create"),
+            {"name": "bug"},
+        )
+        self.assertEqual(response.status_code, 200)
+        form = response.context["form"]
+        self.assertFalse(form.is_valid())
+        self.assertIn("name", form.errors)
+
     def test_label_delete_get(self):
         """форма удаления"""
         response = self.client.get(reverse("label_delete", args=[2]))

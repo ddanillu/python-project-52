@@ -93,3 +93,26 @@ class TaskTests(TestCase):
         response = self.client.post(reverse("task_delete", args=[1]))
         self.assertRedirects(response, reverse("tasks_list"))
         self.assertEqual(Task.objects.count(), old_count - 1)
+
+    def test_task_create_invalid_form(self):
+        """создание задачи с невалидными данными не создает запись"""
+        self.client.login(username="testuser", password="testpass123")
+        old_count = Task.objects.count()
+        response = self.client.post(
+            reverse("task_create"),
+            {
+                "name": "",
+                "description": "desc",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Task.objects.count(), old_count)
+        form = response.context["form"]
+        self.assertFalse(form.is_valid())
+        self.assertIn("name", form.errors)
+
+    def test_task_detail_404_for_missing_task(self):
+        """запрос несуществующей задачи дает 404"""
+        self.client.login(username="testuser", password="testpass123")
+        response = self.client.get(reverse("task_detail", args=[999]))
+        self.assertEqual(response.status_code, 404)

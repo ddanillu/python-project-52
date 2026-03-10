@@ -38,6 +38,17 @@ class StatusTests(TestCase):
         response = self.client.get(reverse("status_update", args=[1]))
         self.assertEqual(response.status_code, 200)
 
+    def test_status_create_duplicate_name_invalid(self):
+        """нельзя создать статус с уже существующим именем"""
+        response = self.client.post(
+            reverse("status_create"),
+            {"name": "Новая"},
+        )
+        self.assertEqual(response.status_code, 200)
+        form = response.context["form"]
+        self.assertFalse(form.is_valid())
+        self.assertIn("name", form.errors)
+
     def test_delete_in_use_status(self):
         """Статус нельзя удалить, если он связан с задачей"""
         response = self.client.post(reverse("status_delete", args=[1]))
