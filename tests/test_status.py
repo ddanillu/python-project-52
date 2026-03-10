@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib import messages
-from .models import Status
+from task_manager.models import Status
 
 
 class StatusTests(TestCase):

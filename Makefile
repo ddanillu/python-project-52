@@ -20,22 +20,22 @@ test:
 	uv run manage.py test
 
 test-users:
-	uv run manage.py test task_manager.test_users -v2
+	uv run manage.py test tests.test_users -v2
 
 test-statuses:
-	uv run manage.py test task_manager.test_status -v2
+	uv run manage.py test tests.test_status -v2
 
 test-tasks:
-	uv run manage.py test task_manager.test_tasks -v2
+	uv run manage.py test tests.test_tasks -v2
 
 test-labels:
-	uv run manage.py test task_manager.test_labels -v2
+	uv run manage.py test tests.test_labels -v2
 
 test-filter:
-	uv run manage.py test task_manager.test_filter -v2
+	uv run manage.py test tests.test_filter -v2
 
 test-coverage:
-	uv run coverage run manage.py test task_manager && \
+	uv run coverage run --source=task_manager manage.py test --settings=task_manager.test_settings && \
 	uv run coverage xml
 
 extract:
