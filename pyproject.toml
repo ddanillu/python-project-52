@@ -16,3 +16,8 @@ dependencies = [
     "ruff>=0.14.14",
     "whitenoise[brotli]>=6.11.0",
 ]
+
+[dependency-groups]
+dev = [
+    "coverage>=7.13.4",
+]

@@ -34,6 +34,10 @@ test-labels:
 test-filter:
 	uv run manage.py test task_manager.test_filter -v2
 
+test-coverage:
+	uv run coverage run manage.py test task_manager && \
+	uv run coverage xml
+
 extract:
 	uv run django-admin makemessages -l en
 
