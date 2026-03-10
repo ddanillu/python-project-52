@@ -13,6 +13,7 @@
     {% include 'partials/nav.html' %}
 
     <main id="main-content" tabindex="-1">
+        {% bootstrap_messages %}
         {% block content %}
         {% endblock %}
     </main>

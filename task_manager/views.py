@@ -43,12 +43,13 @@ class UserListView(ListView):
         return self.get_regular_users()
 
 
-# Регистрация → редирект на login
-class RegisterView(CreateView):
+# Регистрация → редирект на login + сообщение об успехе
+class RegisterView(SuccessMessageMixin, CreateView):
     model = User
     form_class = RegisterForm
     template_name = "users/form.html"
     success_url = reverse_lazy("login")
+    success_message = _("Пользователь успешно зарегистрирован")
 
 
 # Логин → редирект на главную
