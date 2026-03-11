@@ -163,15 +163,16 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = "statuses/status_delete.html"
     success_url = reverse_lazy("statuses_list")
 
-    def dispatch(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if obj.task_set.exists():
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.task_set.exists():
             messages.error(
                 self.request,
                 _("Невозможно удалить статус, потому что он используется"),
             )
-            return redirect("statuses_list")
-        return super().dispatch(request, *args, **kwargs)
+            return self.get(request, *args, **kwargs)
+        else:
+            return super().post(request, *args, **kwargs)
 
     def get_success_message(self, cleaned_data):
         return _("Статус успешно удален")
@@ -218,24 +219,21 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 # Удаление задачи (только автором)
-class TaskDeleteView(
-    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView
-):
+class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Task
     template_name = "tasks/task_delete.html"
     success_url = reverse_lazy("tasks_list")
 
-    def test_func(self):
-        return self.get_object().author == self.request.user
-
     def dispatch(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if obj.author != self.request.user:
-            messages.error(
-                self.request, _("Задачу может удалить только ее автор")
-            )
-            return redirect("tasks_list")
+        self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.author != request.user:
+            messages.error(request, _("Задачу может удалить только её автор"))
+            return self.get(request, *args, **kwargs)
+        return super().post(request, *args, **kwargs)
 
     def get_success_message(self, cleaned_data):
         return _("Задача успешно удалена")
@@ -276,15 +274,16 @@ class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = "labels/label_delete.html"
     success_url = reverse_lazy("labels_list")
 
-    def dispatch(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj.task_set.exists():
             messages.error(
                 self.request,
                 _("Невозможно удалить метку, потому что она используется"),
             )
-            return redirect("labels_list")
-        return super().dispatch(request, *args, **kwargs)
+            return self.get(request, *args, **kwargs)
+        else:
+            return super().post(request, *args, **kwargs)
 
     def get_success_message(self, cleaned_data):
         return _("Метка успешно удалена")

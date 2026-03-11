@@ -165,6 +165,4 @@ class TaskForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["executor"].queryset = User.objects.filter(
-            is_active=True
-        ).exclude(is_staff=True, is_superuser=True)
+        self.fields["executor"].queryset = User.objects.all()

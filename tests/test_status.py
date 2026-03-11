@@ -52,12 +52,14 @@ class StatusTests(TestCase):
     def test_delete_in_use_status(self):
         """Статус нельзя удалить, если он связан с задачей"""
         response = self.client.post(reverse("status_delete", args=[1]))
-
-        self.assertRedirects(response, reverse("statuses_list"))
-        messages_list = list(messages.get_messages(response.wsgi_request))
-        self.assertEqual(len(messages_list), 1)
-        self.assertIn("Невозможно удалить статус", str(messages_list[0]))
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(
+            reverse("status_delete", args=[1]), data={"confirm": "yes"}
+        )
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(Status.objects.filter(pk=1).exists())
+        messages_list = list(messages.get_messages(response.wsgi_request))
+        self.assertIn("Невозможно удалить статус", str(messages_list[0]))
 
     def test_delete_is_not_used_status(self):
         """Статус можно удалить, если нет задач"""

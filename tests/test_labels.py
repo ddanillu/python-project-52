@@ -74,7 +74,11 @@ class LabelTests(TestCase):
     def test_label_delete_protected(self):
         """нельзя удалить связанную метку"""
         response = self.client.post(reverse("label_delete", args=[1]))
-        self.assertRedirects(response, reverse("labels_list"))
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(
+            reverse("label_delete", args=[1]), data={"confirm": "yes"}
+        )
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(Label.objects.filter(pk=1).exists())
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertIn("Невозможно удалить метку", str(messages_list[0]))
