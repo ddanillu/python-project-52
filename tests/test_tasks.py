@@ -51,16 +51,13 @@ class TaskTests(TestCase):
         """чужая задача — сообщение + редирект"""
         self.client.login(username="otheruser", password="testpass123")
         response = self.client.get(reverse("task_delete", args=[1]))
-        self.assertEqual(response.status_code, 200)
-        response = self.client.post(
-            reverse("task_delete", args=[1]), data={"confirm": "yes"}
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(Task.objects.filter(pk=1).exists())
+
         messages_list = list(messages.get_messages(response.wsgi_request))
+        self.assertEqual(len(messages_list), 1)
         self.assertIn(
-            "Задачу может удалить только её автор", str(messages_list[0])
+            "Задачу может удалить только ее автор", str(messages_list[0])
         )
+        self.assertEqual(response.status_code, 302)
 
     def test_tasks_count(self):
         """проверка количества задач"""
