@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-11 14:37+0300\n"
+"POT-Creation-Date: 2026-03-11 14:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -376,8 +376,8 @@ msgid "Пользователь успешно изменен"
 msgstr "User successfully updated"
 
 #: task_manager/views.py:93
-msgid "У вас нет прав для изменения"
-msgstr "You do not have permission to edit"
+msgid "У вас нет прав для изменения пользователя"
+msgstr "You do not have permission to update another user"
 
 #: task_manager/views.py:106
 msgid "Пользователь успешно удален"
@@ -392,61 +392,55 @@ msgid "Нельзя удалить пользователя - у него ест
 msgstr "Cannot delete user - they have tasks"
 
 #: task_manager/views.py:146
-#, python-format
-msgid "Статус '%(name)s' успешно создан"
-msgstr "Status '%(name)s' successfully created"
+msgid "Статус успешно создан"
+msgstr "Status successfully created"
 
-#: task_manager/views.py:159
-#, python-format
-msgid "Статус '%(name)s' успешно изменен"
-msgstr "Status '%(name)s' successfully updated"
+#: task_manager/views.py:157
+msgid "Статус успешно изменен"
+msgstr "Status successfully updated"
 
-#: task_manager/views.py:175
+#: task_manager/views.py:171
 msgid "Невозможно удалить статус, потому что он используется"
 msgstr "Cannot delete status because it is in use"
 
-#: task_manager/views.py:181
-#, python-format
-msgid "Статус '%(name)s' успешно удален"
-msgstr "Status '%(name)s' successfully deleted"
+#: task_manager/views.py:177
+msgid "Статус успешно удален"
+msgstr "Status successfully deleted"
 
-#: task_manager/views.py:212
-#, python-format
-msgid "Задача '%(name)s' успешно создана"
-msgstr "Task '%(name)s' successfully created"
+#: task_manager/views.py:206
+msgid "Задача успешно создана"
+msgstr "Task successfully created"
 
-#: task_manager/views.py:225
-#, python-format
-msgid "Задача '%(name)s' успешно изменена"
-msgstr "Task '%(name)s' successfully updated"
+#: task_manager/views.py:217
+msgid "Задача успешно изменена"
+msgstr "Task successfully updated"
 
-#: task_manager/views.py:245
+#: task_manager/views.py:235
 msgid "Задачу может удалить только ее автор"
 msgstr "Only the task author can delete it"
 
-#: task_manager/views.py:251
-#, python-format
-msgid "Задача '%(name)s' успешно удалена"
-msgstr "Task '%(name)s' successfully deleted"
+#: task_manager/views.py:241
+msgid "Задача успешно удалена"
+msgstr "Task successfully deleted"
 
-#: task_manager/views.py:271
-#, python-format
-msgid "Метка '%(name)s' успешно создана"
-msgstr "Label '%(name)s' successfully created"
+#: task_manager/views.py:259
+msgid "Метка успешно создана"
+msgstr "Label successfully created"
+
+#: task_manager/views.py:270
+msgid "Метка успешно изменена"
+msgstr "Label successfully updated"
 
 #: task_manager/views.py:284
-#, python-format
-msgid "Метка '%(name)s' успешно изменена"
-msgstr "Label '%(name)s' successfully updated"
-
-#: task_manager/views.py:300
 msgid "Невозможно удалить метку, потому что она используется"
 msgstr "Cannot delete label because it is in use"
 
-#: task_manager/views.py:306
-#, python-format
-msgid "Метка '%(name)s' успешно удалена"
-msgstr "Label '%(name)s' successfully deleted"
+#: task_manager/views.py:290
+msgid "Метка успешно удалена"
+msgstr "Label successfully deleted"
+
+#~ msgid "У вас нет прав для изменения"
+#~ msgstr "You do not have permission to edit"
 
 #~ msgid "Сохранить"
 #~ msgstr "Save"

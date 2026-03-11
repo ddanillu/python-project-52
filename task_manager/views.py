@@ -90,7 +90,7 @@ class UserUpdateView(
         if obj != self.request.user:
             messages.error(
                 self.request,
-                _("У вас нет прав для изменения"),
+                _("У вас нет прав для изменения пользователя"),
             )
             return redirect("users_list")
         return super().dispatch(request, *args, **kwargs)
@@ -143,9 +143,7 @@ class StatusCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("statuses_list")
 
     def get_success_message(self, cleaned_data):
-        return _("Статус '%(name)s' успешно создан") % {
-            "name": cleaned_data["name"]
-        }
+        return _("Статус успешно создан")
 
 
 # Редактирование статуса (доступно только аунтифицированным пользователям)
@@ -156,9 +154,7 @@ class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("statuses_list")
 
     def get_success_message(self, cleaned_data):
-        return _("Статус '%(name)s' успешно изменен") % {
-            "name": cleaned_data["name"]
-        }
+        return _("Статус успешно изменен")
 
 
 # Удаление статуса (если статус не связан ни с одной задача)
@@ -178,9 +174,7 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_message(self, cleaned_data):
-        return _("Статус '%(name)s' успешно удален") % {
-            "name": self.object.name
-        }
+        return _("Статус успешно удален")
 
 
 # Список задач
@@ -209,9 +203,7 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_message(self, cleaned_data):
-        return _("Задача '%(name)s' успешно создана") % {
-            "name": cleaned_data["name"]
-        }
+        return _("Задача успешно создана")
 
 
 # Изменение задачи
@@ -222,9 +214,7 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("tasks_list")
 
     def get_success_message(self, cleaned_data):
-        return _("Задача '%(name)s' успешно изменена") % {
-            "name": cleaned_data["name"]
-        }
+        return _("Задача успешно изменена")
 
 
 # Удаление задачи (только автором)
@@ -248,9 +238,7 @@ class TaskDeleteView(
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_message(self, cleaned_data):
-        return _("Задача '%(name)s' успешно удалена") % {
-            "name": self.object.name
-        }
+        return _("Задача успешно удалена")
 
 
 # Список меток
@@ -268,9 +256,7 @@ class LabelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("labels_list")
 
     def get_success_message(self, cleaned_data):
-        return _("Метка '%(name)s' успешно создана") % {
-            "name": cleaned_data["name"]
-        }
+        return _("Метка успешно создана")
 
 
 # Изменение метки
@@ -281,9 +267,7 @@ class LabelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("labels_list")
 
     def get_success_message(self, cleaned_data):
-        return _("Метка '%(name)s' успешно изменена") % {
-            "name": cleaned_data["name"]
-        }
+        return _("Метка успешно изменена")
 
 
 # Удаление метки
@@ -303,6 +287,4 @@ class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_message(self, cleaned_data):
-        return _("Метка '%(name)s' успешно удалена") % {
-            "name": self.object.name
-        }
+        return _("Метка успешно удалена")
