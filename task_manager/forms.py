@@ -13,6 +13,11 @@ class RegisterForm(UserCreationForm):
     username = forms.CharField(
         max_length=150, required=True, label=_("Имя пользователя")
     )
+    password_confirm = forms.CharField(
+        label=_("Подтверждение пароля"),
+        widget=forms.PasswordInput,
+        help_text=None,
+    )
 
     class Meta:
         model = User
@@ -21,25 +26,34 @@ class RegisterForm(UserCreationForm):
             "last_name",
             "username",
             "password1",
-            "password2",
+            "password_confirm",
         ]
         labels = {
             "password1": _("Пароль"),
-            "password2": _("Подтверждение пароля"),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields.pop("password2", None)
         self.fields["password1"].help_text = _("Пароль минимум 3 символов")
-        self.fields["password2"].help_text = None
+        self.fields["password_confirm"].help_text = None
 
-    def clean_password1(self):
-        password1 = self.cleaned_data.get('password1')
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password_confirm")
+
+        # Проверка на совпадение паролей
+        if password1 and password2 and password1 != password2:
+            self.add_error("password_confirm", _("Пароли не совпадают"))
+
+        # Проверка длины пароля
         if password1 and len(password1) < 3:
             raise forms.ValidationError(
                 _("Пароль должен содержать минимум 3 символа")
-                )
-        return password1
+            )
+
+        return cleaned_data
 
 
 class LoginForm(AuthenticationForm):
@@ -53,7 +67,7 @@ class UserForm(forms.ModelForm):
         widget=forms.PasswordInput,
         help_text=_("Оставьте пустым для сохранения текущего"),
     )
-    password2 = forms.CharField(
+    password_confirm = forms.CharField(
         label=_("Подтверждение пароля"),
         required=False,
         widget=forms.PasswordInput,
@@ -70,35 +84,37 @@ class UserForm(forms.ModelForm):
 
     def clean_username(self):
         username = self.cleaned_data["username"]
+        existing = User.objects.filter(username=username)
+
         if self.instance.pk:
-            existing = User.objects.filter(username=username).exclude(
-                pk=self.instance.pk
+            existing = existing.exclude(pk=self.instance.pk)
+
+        if existing.exists():
+            raise forms.ValidationError(
+                _("Пользователь с таким именем уже существует")
             )
-            if existing.exists():
-                raise forms.ValidationError(
-                    "Пользователь с таким именем уже существует."
-                )
-        else:
-            if User.objects.filter(username=username).exists():
-                raise forms.ValidationError(
-                    "Пользователь с таким именем уже существует."
-                )
+
         return username
 
-    def clean_password2(self):
+    def clean_password_confirm(self):
         password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
+        password2 = self.cleaned_data.get("password_confirm")
+
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Пароли не совпадают.")
+            raise forms.ValidationError(_("Пароли не совпадают."))
+
         return password2
 
     def save(self, commit=True):
         user = super().save(commit=False)
         password1 = self.cleaned_data.get("password1")
+
         if password1:
             user.set_password(password1)
+
         if commit:
             user.save()
+
         return user
 
 

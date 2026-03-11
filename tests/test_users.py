@@ -28,7 +28,7 @@ class UserTests(TestCase):
                 "last_name": "User",
                 "username": "newuser",
                 "password1": "newpass123",
-                "password2": "newpass123",
+                "password_confirm": "newpass123",
             },
         )
         self.assertRedirects(response, reverse("login"))
@@ -85,7 +85,7 @@ class UserFormTests(TestCase):
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "password1": "newstrongpass123",
-                "password2": "newstrongpass123",
+                "password_confirm": "newstrongpass123",
             },
         )
         self.assertTrue(form.is_valid())
@@ -105,7 +105,7 @@ class RegisterFormTests(TestCase):
                 "last_name": "Name",
                 "username": existing.username,
                 "password1": "somepass123",
-                "password2": "somepass123",
+                "password_confirm": "somepass123",
             }
         )
         self.assertFalse(form.is_valid())
@@ -119,11 +119,13 @@ class RegisterFormTests(TestCase):
                 "last_name": "User",
                 "username": "new-user-xyz",
                 "password1": "pass1",
-                "password2": "pass2",
+                "password_confirm": "pass2",
             }
         )
         self.assertFalse(form.is_valid())
-        self.assertIn("password2", form.errors)
+        self.assertIn(
+            "Пароли не совпадают", str(form.errors["password_confirm"])
+        )
 
 
 class UserMessagesTests(TestCase):
@@ -136,7 +138,7 @@ class UserMessagesTests(TestCase):
                 "last_name": "User",
                 "username": "newuser2",
                 "password1": "newpass123",
-                "password2": "newpass123",
+                "password_confirm": "newpass123",
             },
             follow=True,
         )
