@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-11 13:46+0300\n"
+"POT-Creation-Date: 2026-03-11 14:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,6 +147,7 @@ msgstr "Cancel"
 #: task_manager/templates/labels/label_delete.html:23
 #: task_manager/templates/statuses/status_delete.html:23
 #: task_manager/templates/tasks/task_delete.html:23
+#: task_manager/templates/users/user_delete.html:24
 msgid "Да, удалить"
 msgstr "Delete"
 
@@ -162,8 +163,9 @@ msgstr "Create label"
 
 #: task_manager/templates/labels/label_form.html:29
 #: task_manager/templates/statuses/status_form.html:29
-msgid "Сохранить"
-msgstr "Save"
+#: task_manager/templates/tasks/task_form.html:32
+msgid "Создать"
+msgstr "Create"
 
 #: task_manager/templates/labels/label_form.html:32
 #: task_manager/templates/statuses/status_form.html:32
@@ -196,7 +198,6 @@ msgstr "Update"
 #: task_manager/templates/statuses/status_list.html:42
 #: task_manager/templates/tasks/task_detail.html:67
 #: task_manager/templates/tasks/task_list.html:79
-#: task_manager/templates/users/user_delete.html:24
 #: task_manager/templates/users/users_list.html:41
 msgid "Удалить"
 msgstr "Delete"
@@ -296,17 +297,13 @@ msgstr "Update task"
 msgid "Создание задачи"
 msgstr "Create task"
 
-#: task_manager/templates/tasks/task_form.html:32
-msgid "Создать"
-msgstr "Create"
-
 #: task_manager/templates/tasks/task_list.html:12
 msgid "Создать задачу"
 msgstr "Create task"
 
 #: task_manager/templates/tasks/task_list.html:36
-msgid "Поиск"
-msgstr "Search"
+msgid "Показать"
+msgstr "Show"
 
 #: task_manager/templates/tasks/task_list.html:39
 msgid "Очистить"
@@ -450,6 +447,12 @@ msgstr "Cannot delete label because it is in use"
 #, python-format
 msgid "Метка '%(name)s' успешно удалена"
 msgstr "Label '%(name)s' successfully deleted"
+
+#~ msgid "Сохранить"
+#~ msgstr "Save"
+
+#~ msgid "Поиск"
+#~ msgstr "Search"
 
 #~ msgid "Название"
 #~ msgstr "Name"
