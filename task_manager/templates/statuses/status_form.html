@@ -25,9 +25,15 @@
                 {% bootstrap_field form.name show_label=True %}
                 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-3">
-                    <button type="submit" class="btn btn-primary">
-                        {% translate "Создать" %}
-                    </button>
+                    {% if form.instance.pk %}
+                        <button type="submit" class="btn btn-primary">
+                            {% translate "Изменить" %}
+                        </button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary">
+                            {% translate "Создать" %}
+                        </button>
+                    {% endif %}
                     <a href="{% url 'statuses_list' %}" class="btn btn-secondary">
                         {% translate "Отмена" %}
                     </a>
