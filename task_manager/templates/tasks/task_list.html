@@ -8,12 +8,9 @@
     <div class="row">
         <div class="col-12">
             <h1>{% translate "Задачи" %}</h1>
-            <form action="{% url 'task_create' %}" method="get">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-plus"></i> {% translate "Создать задачу" %}
-                </button>
-            </form>
+            <a href="{% url 'task_create' %}">
+                <button type="button" class="btn btn-primary">Создать задачу</button>
+            </a>
         </div>
     </div>
 
