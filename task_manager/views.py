@@ -203,6 +203,9 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+
     def get_success_message(self, cleaned_data):
         return _("Задача успешно создана")
 
