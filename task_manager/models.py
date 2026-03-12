@@ -24,7 +24,7 @@ class Label(models.Model):
 
 
 class Task(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
     status = models.ForeignKey("Status", on_delete=models.PROTECT)
     author = models.ForeignKey(

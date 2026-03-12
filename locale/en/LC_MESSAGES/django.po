@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-11 17:58+0300\n"
+"POT-Creation-Date: 2026-03-12 14:29+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,6 +101,10 @@ msgstr "Labels"
 #: task_manager/forms.py:162
 msgid "Удерживайте Ctrl (Cmd на Mac) для выбора нескольких меток"
 msgstr "Hold Ctrl (Cmd on Mac) to select multiple labels"
+
+#: task_manager/forms.py:179
+msgid "Задача с таким именем уже существует"
+msgstr "A task with this name already exists"
 
 #: task_manager/models.py:15
 msgid "имя"

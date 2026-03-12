@@ -165,7 +165,17 @@ class TaskForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["executor"].queryset = User.objects.all()
+        self.fields["executor"].queryset = User.objects.filter(
+            is_staff=False, is_superuser=False
+        ).all()
         self.fields["executor"].label_from_instance = (
             lambda obj: f"{obj.first_name} {obj.last_name}"
         )
+
+    def clean_name(self):
+        name = self.cleaned_data["name"]
+        if Task.objects.filter(name=name).exists():
+            raise forms.ValidationError(
+                _("Задача с таким именем уже существует")
+            )
+        return name

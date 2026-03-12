@@ -29,6 +29,23 @@ class TaskTests(TestCase):
         response = self.client.get(reverse("task_create"))
         self.assertEqual(response.status_code, 200)
 
+    def test_task_create_duplicate_name(self):
+        """создание задачи с дублирующим именем"""
+        self.client.login(username="testuser", password="testpass123")
+        existing_task = Task.objects.get(id=1)
+        response = self.client.post(
+            reverse("task_create"),
+            {
+                "name": existing_task.name,
+                "description": "Описание второй задачи",
+                "status": existing_task.status.id,
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("name", response.context["form"].errors)
+        self.assertEqual(Task.objects.count(), 1)
+
     def test_task_create_unauthenticated(self):
         """создание задачи без авторизации"""
         response = self.client.get(reverse("task_create"), follow=True)
