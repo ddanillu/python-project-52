@@ -32,4 +32,6 @@ jobs:
           args: >
             -Dsonar.projectKey=ddanillu_python-project-52
             -Dsonar.organization=ddanillu-organization
+            -Dsonar.sources=task_manager
+            -Dsonar.tests=tests
             -Dsonar.python.coverage.reportPaths=coverage.xml
